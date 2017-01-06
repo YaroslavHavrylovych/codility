@@ -1,6 +1,9 @@
 package com.yaroslav.lancelot.exercises;
 
-/** */
+/**
+ * Simple balancer:
+ * balance brackets in the input value with only possibility to remove brackets
+ */
 public class BracketsSimpleBalancer {
     /**
      * trying to balance brackets in the string with only possibility to remove not needed brackets
@@ -15,7 +18,8 @@ public class BracketsSimpleBalancer {
     }
 
     /**
-     * removing misplaced open brackets
+     * removing misplaced open brackets (as we can't be sure about their placement, we're removing them from the end
+     * (we could only guess which bracket should be there)
      */
     private void updateOpenBrackets(StringBuilder result, int unbalancedOpenBracketsAmount) {
         int startIndex = result.length();
@@ -53,11 +57,6 @@ public class BracketsSimpleBalancer {
     public static void main(String... args) {
         BracketsSimpleBalancer balancer = new BracketsSimpleBalancer();
         String test = "((((a))sdsa)ds))  vs  (((sa) (()asdas)) ((";
-//        String test = "((ab)";
-//        String test = ") (";
-//        String test = "()";
-//        String test = "(((((((((((()))))))";
-//        String test = "";
         System.out.println(balancer.balance(test));
     }
 }
