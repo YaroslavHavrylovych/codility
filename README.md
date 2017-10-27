@@ -8,3 +8,9 @@ with task description, or not if the folder is self describing
 
 Solutions can be pretty old (thus not optimal) and one day, maybe, I would
 review them, but not today.
+
+## Environment
+
+* Debian sid linux distro
+* Java/javac - openJDK 1.8
+* Kotlin/kotlinc - Kotlin version 1.1.51
