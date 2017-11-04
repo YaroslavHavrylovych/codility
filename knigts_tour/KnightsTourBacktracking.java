@@ -4,10 +4,7 @@ import java.util.stream.Stream;
 import java.util.Arrays;
 
 /**
- * Tour is closed, when the last knight move placed on the cell with distance
- * of one move from the start point. So if knight want, he can start
- * same tour again directly after the last step of the current tour.
- *
+ * Check README to find description.
  */
 public class KnightsTourBacktracking {
     private static final int N = 8;
@@ -32,8 +29,10 @@ public class KnightsTourBacktracking {
     }
 
     private boolean checkLastMove(List<Point> points) {
-        return possibleMoves(points.get(points.size() - 1))
-            .anyMatch(point -> point.equals(points.get(0)));
+        return true;
+        //Uncomment if you want to check that tour is closed
+        //return possibleMoves(points.get(points.size() - 1))
+        //    .anyMatch(point -> point.equals(points.get(0)));
     }
 
     private Stream<Point> possibleMoves(Point last) {

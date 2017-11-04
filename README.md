@@ -2,7 +2,7 @@
 
 It's a playground of coding exercises, or just existing algorithms 
 implementation (e.g. sorting). Solutions can be on
-any language I want to try now. Each forlder would have readme file
+any language I want to try now. Each folder would have README file
 with task description, or not if the folder is self describing 
 (e.g. shell sort).
 
@@ -25,6 +25,6 @@ run: java filename
 
 ### Kotlin
 
-build: kotlinc filename.kt -incude-runtime -d output\_file.jar
+build: kotlinc filename.kt -include-runtime -d output\_file.jar
 
 run: java -jar output\_file.jar

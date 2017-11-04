@@ -1,11 +1,8 @@
 /**
- * Given a matrix of 0 and 1 where:
+ * Check README to find description.
  * <br/>
- * 0 - water
- * <br/>
- * 1 - ground
- * <br/>
- * Find the longest connected (top, down, left or right) sequence of 1.
+ * Algorithm creates a copy of the (world) input array to make modifications in
+ * there.
  */
 public class BiggestIsland {
     private final int water = 0;

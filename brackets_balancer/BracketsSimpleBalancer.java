@@ -1,3 +1,10 @@
+/**
+ * Check README to find description.
+ * <br/>
+ * Remove all unbalanced closing brackets with first check and return
+ * amount of not closed opening brackets.
+ * Then appends string with needed closing brackets to make balance.
+ */
 public class BracketsSimpleBalancer {
     public String balance(String original) {
         StringBuilder str = new StringBuilder(original);

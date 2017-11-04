@@ -3,6 +3,14 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Check README to find description.
+ * <br/>
+ * Current solutions builds a tree (each node is a letter) out of
+ * all given words (from "vocabulary"). If the node is the end
+ * of the word, it has special mark and in the same time can be connected
+ * with other nodes (if a word is connection of multiple words).
+ */
 public class WordBreak {
     final Node rootNode;
 
@@ -20,20 +28,20 @@ public class WordBreak {
             //we break every possible word
             if(parentNode == rootNode) 
                 return breakWords(notBreakedString, breaks);
-            //last word not breaked
+            //last word not broken
             return null;
         }
         //breaking next symbol from the vocabulary
         Node node = parentNode.checkNode(notBreakedString.charAt(ind));
         //no words with given combination of characters
         if(node == null) return null;
-        //if the current symbol ends the word rom vocabulary
+        //if the current symbol ends the word row vocabulary
         if(node.wordEnd) {
             breaks.add(ind + 1);
             String result = wordBreak(notBreakedString, ind + 1,
                     rootNode, breaks);
-            //if null, than next part of the sentence can't be breaked
-            //so we reverting our current break and serach for other solutions
+            //if null, than next part of the sentence can't be broken
+            //so we reverting our current break and search for other solutions
             if(result == null) breaks.remove(breaks.size() - 1);
             else return result;
         }
