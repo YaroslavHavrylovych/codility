@@ -14,3 +14,17 @@ review them, but not today.
 * Debian sid linux distro
 * Java/javac - openJDK 1.8
 * Kotlin/kotlinc - Kotlin version 1.1.51
+
+## Run
+
+### Java
+
+build: javac filename.java
+
+run: java filename
+
+### Kotlin
+
+build: kotlinc filename.kt -incude-runtime -d output\_file.jar
+
+run: java -jar output\_file.jar
