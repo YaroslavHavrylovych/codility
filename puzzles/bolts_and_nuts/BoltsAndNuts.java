@@ -1,19 +1,26 @@
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Arrays;
 
+/**
+ * Check README to find description.
+ * <br/>
+ * In the input you have two arrays of bolts and nuts.
+ */
 public class BoltsAndNuts {
 
     public static void main(String[] args) {
         Bolt[] bolts = new Bolt[] {new Bolt(1), new Bolt(22), new Bolt(3),
             new Bolt(7), new Bolt(12), new Bolt(14), new Bolt(17)};
-        Nut[] nuts= new Nut[] {new Nut(1), new Nut(22), new Nut(3),
-            new Nut(7), new Nut(12), new Nut(14), new Nut(17)};
+        Nut[] nuts= new Nut[] {new Nut(17), new Nut(22), new Nut(1),
+            new Nut(14), new Nut(7), new Nut(3), new Nut(12)};
         Map<Bolt, Nut> result = new BoltsAndNuts().sort(bolts, nuts);
         System.out.println("Sorted bolts and nuts by size: " + result);
     }
 
     public Map<Bolt, Nut> sort(Bolt[] bolts, Nut[] nuts) {
-        Map<Bolt, Nut> map = new HashMap<>(bolts.length);;;;
+        sort(bolts, nuts, 0, bolts.length - 1);
+        Map<Bolt, Nut> map = new HashMap<>(bolts.length);
         for(int i = 0; i < bolts.length; i++)
             map.put(bolts[i], nuts[i]);
          return map;
@@ -22,14 +29,18 @@ public class BoltsAndNuts {
     private void sort(Bolt[] bolts, Nut[] nuts, int low, int hi) {
         if(low > hi) return;
         //splitting parts for bolts and for nuts
-        int splitPos = split(bolts, low, hi, nuts[nuts.length - 1]);
-        split(nuts, low, hi, bolts[bolts.length - 1]);
+        System.out.println("Before:");
+        int splitPos = split(bolts, low, hi, nuts[hi]);
+        swap(nuts, splitPos, hi);
+        split(nuts, low, hi, bolts[splitPos]);
         //continue with each in separate
         sort(bolts, nuts, low, splitPos - 1);
         sort(bolts, nuts, splitPos + 1, hi);
     }
 
     private int split(Nut[] nuts, int low, int hi, Bolt bolt) {
+        System.out.println("Sorting nuts:" + Arrays.toString(nuts));
+        System.out.println("By bolt:" + bolt);
         int i = low, j = hi - 1;
         int pivot = hi;
         boolean done = false;
@@ -38,18 +49,22 @@ public class BoltsAndNuts {
                 if(nuts[i].compareTo(bolt) == 0) swap(nuts, i, pivot);
                 else i++;
             }
-            while(j > i && nuts[i].compareTo(bolt) >= 0) {
-                if(nuts[i].compareTo(bolt) == 0) swap(nuts, i, pivot);
+            while(j > i && nuts[j].compareTo(bolt) >= 0) {
+                if(nuts[j].compareTo(bolt) == 0) swap(nuts, j, pivot);
                 else j--;
             }
             if(i >= j) done = true;
             else swap(nuts, i, j);
         } while(!done);
         swap(nuts, j, pivot);
+        System.out.println("Sorted:" + Arrays.toString(nuts));
         return low;
     }
 
+    //TODO continue here
     private int split(Bolt[] bolts, int low, int hi, Nut nut) {
+        System.out.println("Sorting bolts:" + Arrays.toString(bolts));
+        System.out.println("By nut:" + nut);
         int i = low, j = hi - 1;
         int pivot = hi;
         boolean done = false;
@@ -66,6 +81,7 @@ public class BoltsAndNuts {
             else swap(bolts, i, j);
         } while(!done);
         swap(bolts, j, pivot);
+        System.out.println("Sorted:" + Arrays.toString(bolts));
         return low;
     }
 
@@ -98,7 +114,7 @@ class Bolt implements Comparable<Nut> {
         if(obj == null || (obj instanceof Nut)) {
             return false;
         }
-        return size == ((Nut) obj).size;
+        return compareTo((Nut) obj) == 0;
     }
 
     @Override
@@ -129,7 +145,7 @@ class Nut implements Comparable<Bolt> {
         if(obj == null || (obj instanceof Bolt)) {
             return false;
         }
-        return size == ((Bolt) obj).size;
+        return compareTo((Bolt) obj) == 0;
     }
 
     public int compareTo(Bolt bolt) {
