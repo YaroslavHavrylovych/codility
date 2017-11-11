@@ -24,9 +24,13 @@ public class BoltsAndNuts {
 
     public static void main(String[] args) {
         Bolt[] bolts = new Bolt[] {new Bolt(1), new Bolt(22), new Bolt(3),
-            new Bolt(7), new Bolt(12), new Bolt(14), new Bolt(17)};
+            new Bolt(7), new Bolt(12), new Bolt(14), new Bolt(17),
+            new Bolt(46), new Bolt(42), new Bolt(44), new Bolt(47),
+            new Bolt(36), new Bolt(32), new Bolt(34), new Bolt(37)};
         Nut[] nuts= new Nut[] {new Nut(17), new Nut(22), new Nut(1),
-            new Nut(14), new Nut(7), new Nut(3), new Nut(12)};
+            new Nut(14), new Nut(7), new Nut(3), new Nut(12),
+            new Nut(36), new Nut(34), new Nut(32), new Nut(37),
+            new Nut(47), new Nut(42), new Nut(44), new Nut(46)};
         Map<Bolt, Nut> result = new BoltsAndNuts().sort(bolts, nuts);
         System.out.println("Sorted bolts and nuts by size: " + result);
     }
@@ -70,16 +74,12 @@ public class BoltsAndNuts {
             if(i >= j) done = true;
             else swap(nuts, i, j);
         } while(!done);
-        swap(nuts, j, pivot);
+        if(nuts[j].compareTo(bolt) > 0) swap(nuts, j, pivot);
         return j;
     }
 
     private int split(Bolt[] bolts, int low, int hi, Nut nut) {
         int i = low, j = hi - 1;
-        if(i == j) {
-            if(bolts[i].compareTo(nut) > 0) swap(bolts, low, hi);
-            return low;
-        }
         int pivot = hi;
         boolean done = false;
         do {
@@ -94,7 +94,7 @@ public class BoltsAndNuts {
             if(i >= j) done = true;
             else swap(bolts, i, j);
         } while(!done);
-        swap(bolts, j, pivot);
+        if(bolts[j].compareTo(nut) > 0) swap(bolts, j, pivot);
         return j;
     }
 
@@ -119,7 +119,7 @@ class Bolt implements Comparable<Nut> {
 
     @Override
     public String toString() {
-        return "Bolt(" + size.toString() + ")";
+        return "B(" + size.toString() + ")";
     }
 
     @Override
@@ -150,7 +150,7 @@ class Nut implements Comparable<Bolt> {
 
     @Override
     public String toString() {
-        return "Nut(" + size.toString() + ")";
+        return "N(" + size.toString() + ")";
     }
 
     @Override
