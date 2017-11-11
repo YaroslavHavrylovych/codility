@@ -1,11 +1,24 @@
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Arrays;
 
 /**
  * Check README to find description.
  * <br/>
- * In the input you have two arrays of bolts and nuts.
+ * In the input you have two unsorted arrays of bolts and nuts.
+ * As we need to pair each we could do a full check: each bolt with each nut 
+ * (holding in mind that we can't compare bolt to bolt and nut to nut).
+ * Approach here is to sort bolts and nuts arrays with quicksort, as quicksort
+ * does sorting of array parts based on a given component.
+ * <br/>
+ * Step by step:
+ * 1) Sort bolts by a given nut (nut in the top of the array of nuts).
+ * 2) While sort we could find corresponding bolt which appear on his position.
+ * 3) Based on we have equal amounts of corresponding nuts we know the final
+ * position in a sorted array of a last nut (which was used to sort bolts). So
+ * we moving the nut to it's position.
+ * 4) We have paired single bolt and nut and partly sorted array (against on
+ * component). So we continue our sort (and pairing) on unsorted parts.
+ *
  */
 public class BoltsAndNuts {
 
@@ -27,62 +40,62 @@ public class BoltsAndNuts {
     }
 
     private void sort(Bolt[] bolts, Nut[] nuts, int low, int hi) {
-        if(low > hi) return;
+        if(low >= hi) return;
         //splitting parts for bolts and for nuts
-        System.out.println("Before:");
         int splitPos = split(bolts, low, hi, nuts[hi]);
         swap(nuts, splitPos, hi);
         split(nuts, low, hi, bolts[splitPos]);
-        //continue with each in separate
+        //sorting the rest
         sort(bolts, nuts, low, splitPos - 1);
         sort(bolts, nuts, splitPos + 1, hi);
     }
 
     private int split(Nut[] nuts, int low, int hi, Bolt bolt) {
-        System.out.println("Sorting nuts:" + Arrays.toString(nuts));
-        System.out.println("By bolt:" + bolt);
         int i = low, j = hi - 1;
+        if(i == j) {
+            if(nuts[i].compareTo(bolt) > 0) swap(nuts, low, hi);
+            return low;
+        }
         int pivot = hi;
         boolean done = false;
         do {
             while(i < j && nuts[i].compareTo(bolt) <= 0) {
-                if(nuts[i].compareTo(bolt) == 0) swap(nuts, i, pivot);
+                if(nuts[i].equals(bolt)) swap(nuts, i, pivot);
                 else i++;
             }
             while(j > i && nuts[j].compareTo(bolt) >= 0) {
-                if(nuts[j].compareTo(bolt) == 0) swap(nuts, j, pivot);
+                if(nuts[j].equals(bolt)) swap(nuts, j, pivot);
                 else j--;
             }
             if(i >= j) done = true;
             else swap(nuts, i, j);
         } while(!done);
         swap(nuts, j, pivot);
-        System.out.println("Sorted:" + Arrays.toString(nuts));
-        return low;
+        return j;
     }
 
-    //TODO continue here
     private int split(Bolt[] bolts, int low, int hi, Nut nut) {
-        System.out.println("Sorting bolts:" + Arrays.toString(bolts));
-        System.out.println("By nut:" + nut);
         int i = low, j = hi - 1;
+        if(i == j) {
+            if(bolts[i].compareTo(nut) > 0) swap(bolts, low, hi);
+            return low;
+        }
         int pivot = hi;
         boolean done = false;
         do {
             while(i < j && bolts[i].compareTo(nut) <= 0) {
-                if(bolts[i].compareTo(nut) == 0) swap(bolts, i, pivot);
+                if(bolts[i].equals(nut)) swap(bolts, i, pivot);
                 else i++;
             }
-            while(j > i && bolts[i].compareTo(nut) >= 0) {
-                if(bolts[i].compareTo(nut) == 0) swap(bolts, i, pivot);
+            while(j > i && bolts[j].compareTo(nut) >= 0) {
+                if(bolts[j].equals(nut)) swap(bolts, j, pivot);
                 else j--;
             }
             if(i >= j) done = true;
             else swap(bolts, i, j);
         } while(!done);
         swap(bolts, j, pivot);
-        System.out.println("Sorted:" + Arrays.toString(bolts));
-        return low;
+        return j;
     }
 
     private void swap(Object[] obj, int i1, int i2) {
@@ -106,12 +119,12 @@ class Bolt implements Comparable<Nut> {
 
     @Override
     public String toString() {
-        return size.toString();
+        return "Bolt(" + size.toString() + ")";
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null || (obj instanceof Nut)) {
+        if(obj == null || !(obj instanceof Nut)) {
             return false;
         }
         return compareTo((Nut) obj) == 0;
@@ -137,12 +150,12 @@ class Nut implements Comparable<Bolt> {
 
     @Override
     public String toString() {
-        return size.toString();
+        return "Nut(" + size.toString() + ")";
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null || (obj instanceof Bolt)) {
+        if(obj == null || !(obj instanceof Bolt)) {
             return false;
         }
         return compareTo((Bolt) obj) == 0;
