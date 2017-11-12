@@ -1,4 +1,4 @@
-# coding_exercises
+# Coding Exercises
 
 It's a playground of coding exercises, or just existing algorithms 
 implementation (e.g. sorting). Solutions can be on
@@ -15,7 +15,7 @@ review them, but not today.
 * Java/javac - openJDK 1.8
 * Kotlin/kotlinc - Kotlin version 1.1.51
 
-## Run
+## How to Run
 
 ### Java
 
