@@ -17,13 +17,13 @@ review them, but not today.
 
 ## How to Run
 
-### Java
+_Java_
 
 build: javac filename.java
 
 run: java filename
 
-### Kotlin
+_Kotlin_
 
 build: kotlinc filename.kt -include-runtime -d output\_file.jar
 
