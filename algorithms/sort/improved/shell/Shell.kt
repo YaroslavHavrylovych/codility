@@ -1,13 +1,12 @@
-package com.yaroslav.lancelot.sort.improved.shell
+import java.util.Arrays;
 
-import com.yaroslav.lancelot.sort.SortUtils
-
-/** */
-class ShellK {
+/** Check README to find description */
+class Shell {
     private val distance = intArrayOf(701, 301, 132, 57, 23, 10, 4, 1)
 
     fun sort(a: IntArray) {
-        var interval = distance.asSequence().first { value -> value < a.size / 2 }
+        var interval = distance.asSequence()
+            .first { value -> value < a.size / 2 }
         while (interval > 0) {
             for (i in 0 until a.size - interval) {
                 var minInd = i
@@ -29,9 +28,9 @@ class ShellK {
 }
 
 fun main(args: Array<String>) {
-    val a = SortUtils.readArray("")
-    val sorter = ShellK()
-    SortUtils.print(a)
-    sorter.sort(a)
-    SortUtils.print(a)
+    val a = intArrayOf(10, 2, 11, 31, 60, 90, 81, 85, 
+        75, 21, 13, 32, 42, 90, 1)
+    System.out.println(Arrays.toString(a))
+    Shell().sort(a)
+    System.out.println(Arrays.toString(a))
 }

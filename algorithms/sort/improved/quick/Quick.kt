@@ -1,16 +1,13 @@
-package com.yaroslav.lancelot.sort.improved.quick
+import java.util.Arrays;
 
-import com.yaroslav.lancelot.sort.SortUtils
-
-/** */
-class QuickK {
+/** Check README to find description */
+class Quick {
     fun sort(a: IntArray) {
         sort(a, 0, a.size - 1)
     }
 
     fun sort(a: IntArray, low: Int, hi: Int) {
-        if (low > hi)
-            return
+        if(low > hi) return
         val splitPos = split(a, low, hi)
         sort(a, low, splitPos - 1)
         sort(a, splitPos + 1, hi)
@@ -46,9 +43,9 @@ class QuickK {
 }
 
 fun main(args: Array<String>) {
-    val a = SortUtils.readArray("")
-    val sorter = QuickK()
-    SortUtils.print(a)
-    sorter.sort(a)
-    SortUtils.print(a)
+    val a = intArrayOf(10, 2, 11, 31, 60, 90, 81, 85, 
+        75, 21, 13, 32, 42, 90, 1)
+    System.out.println(Arrays.toString(a))
+    Quick().sort(a)
+    System.out.println(Arrays.toString(a))
 }
