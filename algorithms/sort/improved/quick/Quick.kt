@@ -7,7 +7,7 @@ class Quick {
     }
 
     fun sort(a: IntArray, low: Int, hi: Int) {
-        if(low > hi) return
+        if(low >= hi) return
         val splitPos = split(a, low, hi)
         sort(a, low, splitPos - 1)
         sort(a, splitPos + 1, hi)
@@ -17,7 +17,6 @@ class Quick {
         var i = low
         var j = hi - 1
         val pivot = hi
-        var done = false
         do {
             while (i < j && a[i] < a[pivot]) {
                 i++
@@ -26,13 +25,11 @@ class Quick {
                 j--
             }
             if (i >= j) {
-                done = true
-            } else {
-                swap(a, i, j)
-            }
-        } while (!done)
-        swap(a, j, pivot)
-        return low
+                if(a[j] > a[pivot]) swap(a, j, pivot)
+                return j
+            } 
+            swap(a, i, j)
+        } while (true)
     }
 
     fun swap(a: IntArray, ind1: Int, ind2: Int) {
