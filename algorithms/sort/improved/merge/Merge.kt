@@ -1,8 +1,6 @@
-package com.yaroslav.lancelot.sort.improved.merge
+import java.util.Arrays;
 
-import com.yaroslav.lancelot.sort.SortUtils
-
-/** */
+/** Check README to find description */
 class Merge {
     fun sort(a: IntArray) {
         if (a.size < 2)
@@ -35,9 +33,9 @@ class Merge {
 }
 
 fun main(args: Array<String>) {
-    val a = SortUtils.readArray("")
-    val sorter = Merge()
-    SortUtils.print(a)
-    sorter.sort(a)
-    SortUtils.print(a)
+    val a = intArrayOf(10, 2, 11, 31, 60, 90, 81, 85, 
+        75, 21, 13, 32, 42, 90, 1)
+    System.out.println(Arrays.toString(a))
+    Merge().sort(a)
+    System.out.println(Arrays.toString(a))
 }
