@@ -1,17 +1,11 @@
-package com.yaroslav.lancelot.sort.improved.heap
+import java.util.Arrays
 
-import com.yaroslav.lancelot.sort.SortUtils
-
-/** */
+/** Check README to find description */
 class Heap {
     fun sort(a: IntArray) {
-        var end = a.size - 1
-        maxHeap(a, 0, end)
-        swap(a, 0, end--)
-
-        for (newEnd in end downTo 1) {
-            maxHeap(a, 0, newEnd)
-            swap(a, 0, newEnd)
+        for (end in (a.size - 1) downTo 1) {
+            maxHeap(a, 0, end)
+            swap(a, 0, end)
         }
     }
 
@@ -46,9 +40,9 @@ class Heap {
 }
 
 fun main(args: Array<String>) {
-    val a = SortUtils.readArray("")
-    val sorter = Heap()
-    SortUtils.print(a)
-    sorter.sort(a)
-    SortUtils.print(a)
+    val a = intArrayOf(10, 2, 11, 31, 60, 90, 81, 85, 
+        75, 21, 13, 32, 42, 90, 1)
+    System.out.println(Arrays.toString(a))
+    Heap().sort(a)
+    System.out.println(Arrays.toString(a))
 }

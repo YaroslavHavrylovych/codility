@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
  * but use existing)
  * <br/>
  * We could search remove symetry solutions to achieve 12 totally unique.
- * 
  */
 public class NqueensBacktracking {
     private final int NO_VALUE = -1;
