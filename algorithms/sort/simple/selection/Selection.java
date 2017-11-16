@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+/** Check README to find description */
 public class Selection {
     public void sort(int[] a) {
         for(int i = 0; i < a.length - 1; i++) {
@@ -28,8 +29,8 @@ public class Selection {
     public static void main(String[] args) {
         int[] array = new int[] {10, 2, 11, 31, 60, 90, 81,
             85, 75, 21, 13, 32, 42, 90, 1};
-        System.out.println("start array " + Arrays.toString(array));
+        System.out.println(Arrays.toString(array));
         new Selection().sort(array);
-        System.out.println("sorted array " + Arrays.toString(array));
+        System.out.println(Arrays.toString(array));
     }
 }

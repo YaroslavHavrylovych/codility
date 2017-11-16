@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+/** Check README to find description */
 class Insertion {
     fun sort(a: IntArray) {
         for (i in 1..(a.size - 1))
@@ -19,7 +20,7 @@ class Insertion {
 fun main(args: Array<String>) {
     val array = intArrayOf(10, 2, 11, 31, 60, 90, 81,
         85, 75, 21, 13, 32, 42, 90, 1)
-    System.out.println("Stat array " + Arrays.toString(array))
+    System.out.println(Arrays.toString(array))
     Insertion().sort(array)
-    System.out.println("Sorted array " + Arrays.toString(array))
+    System.out.println(Arrays.toString(array))
 }
