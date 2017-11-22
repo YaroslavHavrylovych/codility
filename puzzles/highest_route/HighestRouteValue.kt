@@ -2,24 +2,24 @@
  * Check README to find description.
  */
 class HighestRouteValue {
-    fun calculate(cell: Coordinates): Int {
+    fun calculate(cell: Coordinate): Int {
         return nextStep(cell)
     }
 
-    fun nextStep(cell: Coordinates): Int {
+    fun nextStep(cell: Coordinate): Int {
         if (cell.n == 0 && cell.m == 0) return matrix[0][0]
         if (cell.n > 0 && cell.m > 0)
             return matrix[cell.n][cell.m] + Math.max(
-                    nextStep(Coordinates(cell.n - 1, cell.m)),
-                    nextStep(Coordinates(cell.n, cell.m - 1)))
+                    nextStep(Coordinate(cell.n - 1, cell.m)),
+                    nextStep(Coordinate(cell.n, cell.m - 1)))
         if (cell.n > 0)
             return matrix[cell.n][cell.m] + nextStep(
-                    Coordinates(cell.n - 1, cell.m))
+                    Coordinate(cell.n - 1, cell.m))
         return matrix[cell.n][cell.m] + nextStep(
-                Coordinates(cell.n, cell.m - 1))
+                Coordinate(cell.n, cell.m - 1))
     }
 
-    class Coordinates constructor(val n: Int, val m: Int) {
+    class Coordinate constructor(val n: Int, val m: Int) {
 
         override fun toString(): String {
             return "{$n, $m}"
@@ -30,7 +30,7 @@ class HighestRouteValue {
         }
 
         override fun equals(other: Any?): Boolean {
-            if (other !is Coordinates) {
+            if (other !is Coordinate) {
                 return false
             }
             return other.n == n && other.m == m
@@ -60,6 +60,6 @@ fun main(args: Array<String>) {
     printMatrix(matrix)
     System.out.println()
     val value = HighestRouteValue().calculate(
-            HighestRouteValue.Coordinates(N - 1, M - 1))
+            HighestRouteValue.Coordinate(N - 1, M - 1))
     System.out.println(Integer.toString(value))
 }
