@@ -1,7 +1,9 @@
 /**
- * The task is to return "equilibrium index" (sum of indexes before and after that index are equals) of an array.
+ * The task is to return "equilibrium index" (sum of indexes before and after 
+ * that index are equals) of an array.
  * <br></br>
- * If index is zero or N-1 (where N - number of elements in array) that's mean that sum of elements from [1..N-1]
+ * If index is zero or N-1 (where N - number of elements in array) 
+ * that's mean that sum of elements from [1..N-1]
  * (or [N-2..0]) is equal to zero.
  */
 class FindEquilibriumIndex {
