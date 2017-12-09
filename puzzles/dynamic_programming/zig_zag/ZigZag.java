@@ -44,19 +44,19 @@ public class ZigZag {
         return max;
     }
 
-    private static void pringLongest(int[] seq) {
+    private static void printLongest(int[] seq) {
         System.out.println("For sequence " + Arrays.toString(seq)
                 + ", longest(ZigZag)=" + new ZigZag().longestZigZag(seq));
     }
 
     public static void main(String[] args) {
-        pringLongest(new int[] { 1, 7, 4, 9, 2, 5 });
-        pringLongest(new int[] { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 });
-        pringLongest(new int[] { 44 });
-        pringLongest(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-        pringLongest(new int[] { 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 
+        printLongest(new int[] { 1, 7, 4, 9, 2, 5 });
+        printLongest(new int[] { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 });
+        printLongest(new int[] { 44 });
+        printLongest(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+        printLongest(new int[] { 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 
             100, 19, 7, 5, 5, 5, 1000, 32, 32 });
-        pringLongest(new int[] { 
+        printLongest(new int[] { 
             374, 40, 854, 203, 203, 156, 362, 279, 812, 955, 
             600, 947, 978, 46, 100, 953, 670, 862, 568, 188, 
             67, 669, 810, 704, 52, 861, 49, 640, 370, 908, 
