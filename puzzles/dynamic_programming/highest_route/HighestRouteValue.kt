@@ -1,5 +1,9 @@
 /**
- * Check README to find description.
+ * TODO it's an old implementation I did which is not
+ * dynamic programming approach. I hope soon I would replace that with the new
+ * solution (today I'm focused on java).
+ * <br/>
+ * Check README to find the description.
  */
 class HighestRouteValue {
     fun calculate(cell: Coordinate): Int {
