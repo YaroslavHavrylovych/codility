@@ -9,6 +9,12 @@ with task description, or not if the folder is self describing
 Solutions can be pretty old (thus not optimal) and one day, maybe, I would
 review them, but not today.
 
+## Attention
+
+As solutions are custom some tasks are prohibited to use. Each task has
+description which points to the place where I have seen it (origin).
+Please check the origin to verify the possibility of usage for the task.
+
 ## Environment
 
 * Debian sid linux distro
