@@ -18,13 +18,6 @@ which his neighbor has also contributed. Next-door neighbors are
 always listed consecutively in donations, except that the first 
 and last entries in donations are also for next-door neighbors.
 
-Definition
-    Class:	BadNeighbors
-    Method:	maxDonations
-    Parameters:	int[]
-    Returns:	int
-    Method signature:	int maxDonations(int[] donations)
- 
 Constraints
     -	donations contains between 2 and 40 elements, inclusive.
     -	Each element in donations is between 1 and 1000, inclusive.
@@ -32,30 +25,12 @@ Constraints
 TODO: 
 Calculate and return the maximum amount of donations that can be collected. 
  
-Examples:
+Example:
 
-0) { 10, 3, 2, 5, 7, 8 }
+{ 10, 3, 2, 5, 7, 8 }
 
 Returns: 19
 
 The maximum donation is 19, achieved by 10+2+7. 
 It would be better to take 10+5+8 except that the 10 and 8 donations are from 
 neighbors.
-
-1) { 11, 15 }
-
-Returns: 15
-
-2) { 7, 7, 7, 7, 7, 7, 7 }
-
-Returns: 21
-
-3) { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 }
-
-Returns: 16
-
-4) { 94, 40, 49, 65, 21, 21, 106, 80, 92, 81, 679, 4, 61,  
-  6, 237, 12, 72, 74, 29, 95, 265, 35, 47, 1, 61, 397,
-  52, 72, 37, 51, 1, 81, 45, 435, 7, 36, 57, 86, 81, 72 }
-
-Returns: 2926

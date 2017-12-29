@@ -1,5 +1,5 @@
 /**
- * Check README to find description.
+ * Check README to find the description.
  * <br/>
  * Even java doesn't have tail optimization I've tried to keep it (for future
  * generations, lol). As in this case we don't need any memoization and it's

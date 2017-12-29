@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**
- * Check README to find description.
+ * Check README to find the description.
  */
 public class MinCoinsAmount {
     private static final int[] COINS = new int[] {1, 3, 4, 5, 10};

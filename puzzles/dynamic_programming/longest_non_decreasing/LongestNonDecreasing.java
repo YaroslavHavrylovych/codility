@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Check README to find description.
+ * Check README to find the description.
  */
 public class LongestNonDecreasing {
     private static final int[] SEQUENCE = 

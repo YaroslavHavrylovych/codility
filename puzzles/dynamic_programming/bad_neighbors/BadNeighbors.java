@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**
- * Check README to find description.
+ * Check README to find the description.
  * <br/>
  * Donations are enclosed/locked (e.g. the first element is last's neighbor).
  * If we remove this condition then the algorithm is straight forward:
