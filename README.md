@@ -19,6 +19,7 @@ Please check the origin to verify the possibility of usage for the task.
 
 * Debian sid linux distro
 * Java/javac - openJDK 1.8
+* ghci (haskell runtime) - ghci version 8.0.2
 * Kotlin/kotlinc - Kotlin version 1.1.51
 
 ## How to Run
