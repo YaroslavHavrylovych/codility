@@ -1,9 +1,0 @@
-next you must create a fast program for a small dataset, which can make a
-backtracking with remembering solutions for subproblems.
-
-i.e. for a give start point  - calculate the best solutions we could have.
-than knapsack problem to find the max profit.
-
-it's limited with 1000*1000 cells (but not limited with time), still it's 
-better to estimate overall complexity to be sure I wouldn't wait for the
-next century to finish the task.
