@@ -17,28 +17,30 @@ public class Slicer {
 
     private void runSlicer(int[][][] slicerTmp, int[] ind,
             char[][] pizza, int l, int h) {
-        for(int i = ind[0]; i < ind[0] + h; i++) {
-            for(int j = ind[1]; j < ind[1] + h; j++) {
-                if(i >= pizza.length || j >= pizza[i].length) continue;
-                if(!isValidSlice(pizza, ind[0], i, ind[1], j, h, l)) 
-                    continue;
-                int currentMaxC = slicerTmp[ind[0]][ind[1]][0]; 
-                int size = (i - ind[0] + 1) * (j - ind[1] + 1);
-                int c = findMaxC(slicerTmp, ind[0], ind[1], i, j);
-                if(c > currentMaxC) {
-                    slicerTmp[ind[0]][ind[1]][0] = c;
-                    slicerTmp[ind[0]][ind[1]][1] = 
-                        (i - ind[0] + 1) * (j - ind[1] + 1);
+        while(ind[0] >= 0 && ind[1] >= 0) {
+            System.out.println("i = " + ind[1] + ", j = " + ind[0]);
+            for(int i = ind[0]; i < ind[0] + h; i++) {
+                for(int j = ind[1]; j < ind[1] + h; j++) {
+                    if(i >= pizza.length || j >= pizza[i].length) continue;
+                    if(!isValidSlice(pizza, ind[0], i, ind[1], j, h, l)) 
+                        continue;
+                    int currentMaxC = slicerTmp[ind[0]][ind[1]][0]; 
+                    int size = (i - ind[0] + 1) * (j - ind[1] + 1);
+                    int c = findMaxC(slicerTmp, ind[0], ind[1], i, j);
+                    if(c > currentMaxC) {
+                        slicerTmp[ind[0]][ind[1]][0] = c;
+                        slicerTmp[ind[0]][ind[1]][1] = 
+                            (i - ind[0] + 1) * (j - ind[1] + 1);
+                    }
                 }
             }
+            if(ind[0] == 0 && ind[1] == 0) return;
+            if(ind[0] == 0) {
+                ind[0] = slicerTmp.length;
+                ind[1] = ind[1] - 1;
+            }
+            ind[0] = ind[0] - 1;
         }
-        if(ind[0] == 0 && ind[1] == 0) return;
-        if(ind[0] == 0) {
-            ind[0] = slicerTmp.length;
-            ind[1] = ind[1] - 1;
-        }
-        ind[0] = ind[0] - 1;
-        runSlicer(slicerTmp, ind, pizza, l, h);
     }
 
     private int findMaxC(int[][][] slicerTmp, int i1, int j1, int i2, int j2) {
