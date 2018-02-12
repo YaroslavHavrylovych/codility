@@ -1,38 +1,18 @@
+import java.io.IOException;
+
 public class Slicer {
     final char TOMATO = 'T';
     final char MUSHROOM = 'M';
 
-    public int[][] runSlicer(char[][] pizza, int l, int h) {
-        int r = pizza.length;
-        int c = pizza[0].length;
-        printPizza(pizza, r, c);
-        System.out.println();
+    public int[][] runSlicer(char[][] pizza, int l, int h, int r, int c) {
         int[][][] slicerTmp = new int[r][][];
         for(int i = 0; i < r; i++) slicerTmp[i] = new int[c][2]; 
         int[] ind = new int[2];
         ind[0] = r;
         ind[1] = c;
         runSlicer(slicerTmp, ind, pizza, l, h);
-        printMaxSlicerTmp(slicerTmp, r, c);
+        System.out.println(slicerTmp[0][0][0]);
         return slicerTmp[0];
-    }
-
-    private void printPizza(char[][] pizza, int r, int c) {
-        for(int i = 0; i < r; i++) {
-            for(int j = 0; j < c; j++) {
-                System.out.print(pizza[i][j] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    private void printMaxSlicerTmp(int[][][] slicerTmp, int r, int c) {
-        for(int i = 0; i < r; i++) {
-            for(int j = 0; j < c; j++) {
-                System.out.print(slicerTmp[i][j][0] + "\t");
-            }
-            System.out.println();
-        }
     }
 
     private void runSlicer(int[][][] slicerTmp, int[] ind,
@@ -101,15 +81,10 @@ public class Slicer {
         return tomotoesAmount >= l && mushroomsAmount >= l;
     }
 
-    public static void main(String[] args) {
-        char[][] pizza = new char[][] {
-            {'T', 'M', 'M', 'M', 'T', 'T', 'T'},
-            {'M', 'M', 'M', 'M', 'T', 'M', 'M'},
-            {'T', 'T', 'M', 'T', 'T', 'M', 'T'},
-            {'T', 'M', 'M', 'T', 'M', 'M', 'M'},
-            {'T', 'T', 'T', 'T', 'T', 'T', 'M'},
-            {'T', 'T', 'T', 'T', 'T', 'T', 'M'}
-        };
-        new Slicer().runSlicer(pizza, 1, 5);
+    public static void main(String[] args) throws IOException {
+        PizzaReader pr = new PizzaReader();
+        pr.readPizzaFile("medium.in");
+        new Slicer().runSlicer(pr.getPizza(), pr.getL(), pr.getH(),
+                pr.getR(), pr.getC());
     }
 }
