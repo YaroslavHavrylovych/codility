@@ -3,74 +3,101 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.IntStream;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Jewellery {
     public int calculatePossibleOutcomes(int[] jewellery) {
         Arrays.sort(jewellery);
-        return calculateOutcome(jewellery, 0, 0, new ArrayList<>());
+        System.out.println("Jewellery: "  + Arrays.toString(jewellery));
+        return calculateCombinations(new HashMap<>(), jewellery, 0, 1);
     }
 
-    private int calculateOutcome(int jewellery[], int i1, int solutions, 
-            List<List<Integer>> combinations) {
-        int i2 = i1 + 1;
-        while(i2 < jewellery.length && jewellery[i1] == jewellery[i2]) i2++;
-        i2--;
-        if(i2 >= jewellery.length) return solutions;
-        int amount = i2 - i1 + 1;
-        List<List<Integer>> newCombinations = 
-            calculateIncrementalCombinations(jewellery[i2], amount, 
-                    combinations);
-        int newSolutions = solutions + 
-            calculateIncrementalOutcomes(newCombinations, jewellery, i2 + 1);
-        if(amount > 1) newSolutions += IntStream.rangeClosed(2, amount)
-            .reduce(1, (a, b) -> a * b);
-        combinations.addAll(newCombinations);
-        return calculateOutcome(jewellery, i2 + 1, newSolutions, combinations);
+    /**
+     * Calculate amount of combinations.
+     * <br/>
+     * Each combination presented as a sum. 
+     * Sum - a key in `sums` argument.
+     * Value in sums argument represents amount of such sums (different
+     * combinations with same sum).
+     * <br/>
+     *
+     * @param sums map which contains existing sum as a key and amount
+     * of such sums as a value
+     * @param jewellery jewellery values. Each jewellery value only once
+     * can be used in combination
+     * @param maxValue the biggest key in sums
+     * @param startInd start index marks the smallest index in jewellery
+     * array which we can use in combinations
+     *
+     * @return amount of combinations which can be generated for each
+     * possible sums key.
+     */
+    private int calculateCombinations(Map<Integer, Integer> sums,
+            int[] jewellery, int maxValue, int startInd) {
+        if(startInd == jewellery.length) return 0;
+        int val = jewellery[startInd - 1];
+        maxValue += maxValue + val;
+        sums = updateSums(sums, val);
+        int comb = calculateCombinations(sums, jewellery, maxValue,
+                0, startInd);
+        System.out.println("At the moment combinations " + startInd 
+                + ": " + comb);
+        System.out.println("start value: " + jewellery[startInd]);
+        System.out.println("At the moment sums: " 
+                + Arrays.toString(sums.keySet().toArray()));
+        System.out.println("At the moment vals: " 
+                + Arrays.toString(sums.values().toArray()));
+        return  comb + calculateCombinations(sums, jewellery, maxValue,
+                    startInd + 1);
     }
 
-    private int calculateIncrementalOutcomes(List<List<Integer>> combinations,
-            int[] jewellery, int ind) {
-        if(ind >= jewellery.length) return 0;
-        List<Integer> sums = new ArrayList<>(combinations.size());
-        for(List<Integer> lst: combinations) sums.add(lst.stream()
-                .mapToInt(Integer::intValue).sum());
-        sums.sort(Integer::compareTo);
-        int endInd = jewellery.length;
-        int maxLeftSum = sums.get(sums.size() - 1);
-        while(endInd > ind && jewellery[--endInd] > maxLeftSum);
-        List<List<Integer>> variations = new ArrayList<>();
-        for(int i = ind; i <= endInd && i < jewellery.length; i++) 
-            variations.addAll(calculateIncrementalCombinations(jewellery[i], 
-                        1, variations));
-        List<Integer> bigSums = new ArrayList<>(variations.size());
-        for(List<Integer> lst: variations) bigSums.add(lst.stream()
-                .mapToInt(Integer::intValue).sum());
-        int result = 0;
-        for(int val: sums) result +=  Collections.frequency(bigSums, val);
-        return result;
+    /**
+     * Calculates new sums if we add one more value to the sequence.
+     *
+     * @param sums old sums values
+     * @param jewellery new value to add to the sequence
+     *
+     * @return all possible sums of the collection with appended
+     * jewellery value.
+     */
+    private Map<Integer, Integer> updateSums(Map<Integer, Integer> sums,
+            int jewellery) {
+        Map<Integer, Integer> newSums = new HashMap<>(sums);
+        for(Map.Entry<Integer, Integer> entry: sums.entrySet()) {
+            int sum = entry.getKey();
+            sum += jewellery;
+            Integer amount = sums.get(sum);
+            newSums.put(sum, amount == null ? 1 : amount + 1);
+        }
+        for(Map.Entry<Integer, Integer> entry: sums.entrySet()) {
+            Integer amount = newSums.get(entry.getKey());
+            if(amount == null) newSums.put(entry.getKey(), entry.getValue());
+        }
+        if(newSums.get(jewellery) == null) newSums.put(jewellery, 1);
+        else newSums.put(jewellery, newSums.get(jewellery) + 1);
+        return newSums;
     }
-    
-    private List<List<Integer>> calculateIncrementalCombinations(int newVal,
-            int amount,
-            List<List<Integer>> combinations) {
-        List<List<Integer>> newCombinations = new ArrayList<List<Integer>>(
-                combinations.size() + 1);
-        List<Integer> singleEl = new ArrayList<>(1);
-        singleEl.add(newVal);
-        for(int i = 0; i < amount; i++) newCombinations.add(singleEl);
-        combinations.stream().forEach(el -> {
-            List<Integer> lst = new ArrayList<>(el.size() + 1);
-            lst.addAll(el);
-            lst.add(newVal);
-            for(int i = 0; i < amount; i++) 
-                newCombinations.add(new ArrayList<>(lst));
-        });
-        return newCombinations;
+
+    /**
+     * Very similar to {@link calculateCombinations} with startInd param,
+     * the difference is that this method has current sum value and current
+     * index we must use in our combination.
+     */
+    private int calculateCombinations(Map<Integer, Integer> sums,
+            int[] jewellery, int maxValue, int currentSum, int currentInd) {
+        currentSum += currentSum + jewellery[currentInd];
+        if(currentSum > maxValue) return 0;
+        Integer amount = sums.get(currentSum);
+        if(amount == null) amount = 0;
+        for(int i = currentInd + 1; i < jewellery.length; i++)
+            amount += calculateCombinations(sums, jewellery, maxValue,
+                    currentSum, i);
+        return amount;
     }
 
     public static void main(String[] args) {
-        int[] jewellery = new int[] {1,2,5,3,4,5};
-        System.out.println("Jewellery: "  + Arrays.toString(jewellery));
+        int[] jewellery = new int[] {1,2,5,3,4};
         System.out.println("Possible outcomes: "  + new Jewellery()
                 .calculatePossibleOutcomes(jewellery));
     }
