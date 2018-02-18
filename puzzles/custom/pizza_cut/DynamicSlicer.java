@@ -3,7 +3,19 @@ import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Slicer {
+/**
+ * Starting from the bottom right point it moves by columns and for each
+ * pizza-array point and tries to make best possible slice for this point
+ * based on previous existing best slices.
+ * <br/>
+ * Base possible slice at the given  point - is a slice which can have
+ * best scores amount at this point with sum of best possible slices
+ * of previous steps which not intersect with the given step.
+ * <br/>
+ * At least at the current implementation the algorithm is too greedy and
+ * gives not best results.
+ */
+public class DynamicSlicer {
     final char TOMATO = 'T';
     final char MUSHROOM = 'M';
 
@@ -160,8 +172,8 @@ public class Slicer {
         }
         PizzaReader pr = new PizzaReader();
         pr.readPizzaFile(arg + ".in");
-        List<int[]> slices = new Slicer().runSlicer(pr.getPizza(), pr.getL(),
-                pr.getH(), pr.getR(), pr.getC());
+        List<int[]> slices = new DynamicSlicer().runSlicer(pr.getPizza(),
+                pr.getL(), pr.getH(), pr.getR(), pr.getC());
         PizzaWriter pw = new PizzaWriter();
         pw.writePizza(arg + ".out", slices);
         System.out.println("Checking result file...");
