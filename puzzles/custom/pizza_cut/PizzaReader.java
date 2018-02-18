@@ -12,7 +12,6 @@ public class PizzaReader {
     private int h;
 
     public void readPizzaFile(String fileName) throws IOException {
-        boolean fileHeader = true;
         List<String> content = Files.lines(Paths.get(fileName))
             .collect(Collectors.toList());
         parseHeader(content.remove(0));
