@@ -22,8 +22,10 @@ public class FileChecker {
                             + content.get(i));
                     return;
                 }
+                stPt.add(pt);
             }
         System.out.println("All slices are valid");
+        System.out.println("Scores: " + stPt.size());
     }
 
     private class SlicePoint {
