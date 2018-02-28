@@ -10,8 +10,8 @@ import java.util.Random;
 public class GaSlicer {
     final char TOMATO = 'T';
     final char MUSHROOM = 'M';
-    final int ITERATIONS = 1500;
-    final int POP_SIZE = 200;
+    final int ITERATIONS = 4000;
+    final int POP_SIZE = 100;
     final int FITNESS = 4;
     final int GENERATE_INDIVIDUAL_TRIES_CONDITION = 200;
     private boolean[][] bufferPizza;
@@ -36,14 +36,15 @@ public class GaSlicer {
         List<Individual> bufferPopulation = new ArrayList<>(POP_SIZE);
         generatePopulation(allSlices, bufferPopulation);
         population.addAll(bufferPopulation);
+        Individual best = null;
         for(int i =0; i < ITERATIONS; i++) {
             System.out.println("Iteration " + i + " out of " + ITERATIONS);
-            for(int ind = 0; ind < POP_SIZE; ind++) {
+            for(int ind = 0; ind < POP_SIZE / 2; ind++) {
                 int parent1Ind = POP_SIZE + rnd.nextInt(POP_SIZE);
                 int parent2Ind = POP_SIZE + rnd.nextInt(POP_SIZE);
-                Individual child1 = population.get(parent1Ind - POP_SIZE);
+                Individual child1 = population.get(2 * ind);
                 child1.clear();
-                Individual child2 = population.get(parent2Ind - POP_SIZE);
+                Individual child2 = population.get(2 * ind + 1);
                 child2.clear();
                 child1.crossover(population.get(parent1Ind),
                         population.get(parent2Ind), allSlices);
@@ -53,8 +54,10 @@ public class GaSlicer {
                 child2.mutate(allSlices);
             }
             Collections.sort(population, new IndividualComparator());
+            best = population.get(2 * POP_SIZE - 1);
+            System.out.println("best: " + best.fitness);
         }
-        return makeBestSlices(allSlices, findBest(population));
+        return makeBestSlices(allSlices, best);
     }
 
     private void filterPopulation(
@@ -105,13 +108,6 @@ public class GaSlicer {
         for(int i = 0; i < allSlices.size(); i++)
             if(individual.genome.get(i)) best.add(allSlices.get(i));
         return best;
-    }
-
-    private Individual findBest(List<Individual> individuals) {
-        return individuals.stream().max((i1, i2) -> {
-            return (i1.fitness > i2.fitness) ? 1 
-                : (i1.fitness == i2.fitness ? 0 : -1);
-        }).get();
     }
 
     private void generatePopulation(List<int[]> allSlices,
@@ -177,7 +173,7 @@ public class GaSlicer {
         PizzaWriter pw = new PizzaWriter();
         pw.writePizza(arg + ".out", slices);
         System.out.println("Checking result file...");
-        new FileChecker().readPizzaFile(arg + ".out");
+        new FileChecker().checkCut(pr, arg + ".out");
     }
 
     private Individual generateIndividual(List<int[]> allSlices, 
@@ -249,22 +245,20 @@ public class GaSlicer {
             return false;
         }
         
-        private void crossover(Individual parent1, Individual parent2, 
+        private void crossover(Individual p1, Individual p2, 
                 List<int[]> allSlices) {
             int crossPoint = rnd.nextInt(allSlices.size() / 2 + 1);
             boolean cross = rnd.nextBoolean();
-            Individual p1 = cross ? parent1 : parent2;
-            Individual p2 = cross ? parent2 : parent1;
-            genome.clear();
+            clear();
             clearBufferPizza();
             for(int p = 0; p < crossPoint; p++) {
                 if(!p1.genome.get(p)) continue;
                 genome.set(p);
                 int[] slice = allSlices.get(p);
+                fitness += slice[FITNESS];
                 for(int i = slice[0]; i <= slice[2]; i++)
                     for(int j = slice[1]; j <= slice[3]; j++) {
                         bufferPizza[i][j] = true;
-                        fitness += slice[FITNESS];
                     }
             }
             for(int p = crossPoint; p < allSlices.size(); p++) {
@@ -275,7 +269,10 @@ public class GaSlicer {
                     l1: for(int j = slice[1]; j <= slice[3]; j++) {
                         if(!bufferPizza[i][j]) {
                             bufferPizza[i][j] = true;
-                            fitness += slice[FITNESS];
+                            if(i == slice[2] && j == slice[3]) {
+                                genome.set(p);
+                                fitness += slice[FITNESS];
+                            }
                             continue;
                         }
                         for(int i1 = slice[0]; i1 <= slice[2]; i1++)
