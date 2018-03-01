@@ -20,7 +20,7 @@ public class GaSlicer {
      * End condition was pretty easy to check with iterations as the solution
      * I did in the last moment, I need to submit ASAP :) 
      */
-    final int ITERATIONS = 10000;
+    final int ITERATIONS = 4000;
     /** test population size */
     final int POP_SIZE = 100;
     /** 
@@ -32,7 +32,7 @@ public class GaSlicer {
      * Amount of tries we do when we can't find another place to put 
      * a slice 
      */
-    final int GENERATE_INDIVIDUAL_TRIES_CONDITION = 200;
+    final int GENERATE_INDIVIDUAL_TRIES_CONDITION = 70;
     /** 
      * It's very bad variable used as tmp in different methods to prevent
      * recreation of this big array (size as in the real pizza) 
@@ -210,7 +210,7 @@ public class GaSlicer {
         int cols2 = cols / 2;
         do {
             int i = rnd.nextInt(bufferPizza.length);
-            int j = getCenteredRandom(cols);
+            int j = rnd.nextInt(bufferPizza[i].length);
             if(!(bufferPizza[i][j] && sectionStart[i][j] != -1)) {
                 j = j < cols2 ? 0 : j; 
                 while(++j < cols) {
@@ -218,7 +218,7 @@ public class GaSlicer {
                 }
                 if(j > cols) {
                     individualGenerated--;
-                    break;
+                    continue;
                 }
             }
             individualGenerated = individual.tryInsertion(allSlices, i, j) 
@@ -226,15 +226,6 @@ public class GaSlicer {
                 : (individualGenerated - 1);
         } while(individualGenerated > 0);
         return individual;
-    }
-
-    /** what benefits - center would be filled first (I didn't have time to
-     * check is it really benefits, but it looks good idea to me now) */
-    private int getCenteredRandom(int length) {
-        double r = rnd.nextGaussian();
-        r = r < -1.0 ? -1.0 : (r > 1.0 ? 1.0 : r);
-        r = (r + 1.0) / 2.0;
-        return (int) Math.round(r * length);
     }
 
     private class Individual  {
