@@ -177,6 +177,6 @@ public class DynamicSlicer {
         PizzaWriter pw = new PizzaWriter();
         pw.writePizza(arg + ".out", slices);
         System.out.println("Checking result file...");
-        new FileChecker().readPizzaFile(arg + ".out");
+        new FileChecker().checkCut(pr, arg + ".out");
     }
 }

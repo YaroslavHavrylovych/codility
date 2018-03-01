@@ -7,17 +7,49 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+/** 
+ * Use Genetic Algorithm to find best possible result for pizza (slices).
+ * <br/>
+ * We're creating a big array each cell of which is a possible pizza slice.
+ * The array contains all variants of slices which satisfy slices conditions.
+ */
 public class GaSlicer {
     final char TOMATO = 'T';
     final char MUSHROOM = 'M';
-    final int ITERATIONS = 4000;
+    /** 
+     * End condition was pretty easy to check with iterations as the solution
+     * I did in the last moment, I need to submit ASAP :) 
+     */
+    final int ITERATIONS = 10000;
+    /** test population size */
     final int POP_SIZE = 100;
+    /** 
+     * We're using array to store slices coordinates. 
+     * One additional dimension used to store fitness value.
+     */
     final int FITNESS = 4;
+    /** 
+     * Amount of tries we do when we can't find another place to put 
+     * a slice 
+     */
     final int GENERATE_INDIVIDUAL_TRIES_CONDITION = 200;
+    /** 
+     * It's very bad variable used as tmp in different methods to prevent
+     * recreation of this big array (size as in the real pizza) 
+     */
     private boolean[][] bufferPizza;
+    /** 
+     * It's very bad variable used as tmp in different methods to prevent
+     * recreation of this big array (size as in the real pizza) 
+     */
     private int[][] sectionStart;
     private Random rnd = new Random();
 
+    /** 
+     * Our slicer which arguments - pizza input conditions 
+     * @return list of all possible slices (int[] which contains top left and
+     * bottom right corners).
+     */
     public List<int[]> runSlicer(char[][] pizza, int l, int h, int r, int c) {
         bufferPizza = new boolean[r][c];
         sectionStart = new int[r][c];
@@ -29,7 +61,11 @@ public class GaSlicer {
         return runSlicer(slicesVariety, h);
     }
 
+    /** The main-est method which does all job of GA. */
     private List<int[]> runSlicer(List<int[]> allSlices, int h) {
+        //  0 - POP_SIZE - buffer elements which would be used to generate new
+        //  population. POP_SIZE - 2 * POP_SIZE - current population.
+        //  Benefit - sort this array and top 500 - best solutions.
         List<Individual> population = new ArrayList<>(2 * POP_SIZE);
         for(int i = 0; i < POP_SIZE; i++) 
             population.add(new Individual(new BitSet(POP_SIZE), 0));
@@ -37,6 +73,7 @@ public class GaSlicer {
         generatePopulation(allSlices, bufferPopulation);
         population.addAll(bufferPopulation);
         Individual best = null;
+        //lets the evolution begins
         for(int i =0; i < ITERATIONS; i++) {
             System.out.println("Iteration " + i + " out of " + ITERATIONS);
             for(int ind = 0; ind < POP_SIZE / 2; ind++) {
@@ -60,32 +97,13 @@ public class GaSlicer {
         return makeBestSlices(allSlices, best);
     }
 
-    private void filterPopulation(
-            List<BitSet> oldGenBits, List<Integer> oldGenFitness,
-            List<BitSet> newGenBits, List<Integer> newGenFitness,
-            List<BitSet> mixGenBits, List<Integer> mixGenFitness) {
-    }
-
-    private void mutate(BitSet genome, List<int[]> allSlices) {
-        List<Integer> changedInd = new ArrayList<>();
-        do {
-            for(Integer ind: changedInd)
-                    genome.set(ind, genome.get(ind) ? false : true);
-            changedInd.clear();
-            for(int i = 0; i < allSlices.size(); i++)
-                if(rnd.nextInt(allSlices.size()) == 0) {
-                    genome.set(i, genome.get(i) ? false : true);
-                    changedInd.add(i);
-                }
-        } while(!isValisGenome(genome, allSlices));
-    }
-
     private void clearBufferPizza() {
         for(int i = 0; i < bufferPizza.length; i++)
             for(int j = 0; j < bufferPizza[i].length; j++)
                 bufferPizza[i][j] = false;
     }
 
+    /** Check that this genome doesn't have overlapping parts (on pizza) */
     private boolean isValisGenome(BitSet genome, List<int[]> allSlices) {
         clearBufferPizza();
         for(int slInd = 0; slInd < allSlices.size(); slInd++)
@@ -102,6 +120,7 @@ public class GaSlicer {
         return true;
     }
 
+    /** create list of slices from genome */
     private List<int[]> makeBestSlices(List<int[]> allSlices,
             Individual individual) {
         List<int[]> best = new ArrayList<>();
@@ -110,6 +129,7 @@ public class GaSlicer {
         return best;
     }
 
+    /** create first population */
     private void generatePopulation(List<int[]> allSlices,
             List<Individual> population) {
         System.out.println("Generating first population...");
@@ -142,6 +162,7 @@ public class GaSlicer {
         return slices;
     }
 
+    /** check slice constraints (mushrooms, tomatoes, size) */
     private boolean isValidSlice(char[][] pizza, int i1, int i2, 
             int j1, int j2, int h, int l) {
         int mushroomsAmount = 0;
@@ -176,6 +197,7 @@ public class GaSlicer {
         new FileChecker().checkCut(pr, arg + ".out");
     }
 
+    /** generate pseudo-random individual */
     private Individual generateIndividual(List<int[]> allSlices, 
             List<Individual> population) {
         Individual individual = 
@@ -206,6 +228,8 @@ public class GaSlicer {
         return individual;
     }
 
+    /** what benefits - center would be filled first (I didn't have time to
+     * check is it really benefits, but it looks good idea to me now) */
     private int getCenteredRandom(int length) {
         double r = rnd.nextGaussian();
         r = r < -1.0 ? -1.0 : (r > 1.0 ? 1.0 : r);
@@ -222,6 +246,10 @@ public class GaSlicer {
             this.fitness = fitness;
         }
 
+        /** 
+         * tries to insert any possible slice which has top left
+         * corner as i,j
+         */
         private boolean tryInsertion(List<int[]> allSlices, int i, int j) {
             int startInd = sectionStart[i][j];
             if(startInd == -1) return false;
@@ -245,6 +273,7 @@ public class GaSlicer {
             return false;
         }
         
+        /** single point crossover - just easier to merge */
         private void crossover(Individual p1, Individual p2, 
                 List<int[]> allSlices) {
             int crossPoint = rnd.nextInt(allSlices.size() / 2 + 1);
@@ -284,6 +313,7 @@ public class GaSlicer {
             }
         }
 
+        /** any random cell */
         private void mutate(List<int[]> allSlices) {
             int i = rnd.nextInt(sectionStart.length); 
             int j = rnd.nextInt(sectionStart[i].length);

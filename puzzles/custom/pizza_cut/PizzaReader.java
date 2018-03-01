@@ -4,6 +4,7 @@ import java.util.List;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+/** Read pizza file and gives public access to data */
 public class PizzaReader {
     private char[][] pizza;
     private int c;

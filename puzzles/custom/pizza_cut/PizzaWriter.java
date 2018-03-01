@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-
+/** Writes list of slices to a given 'filename' with proper format */
 public class PizzaWriter {
     public void writePizza(String fileName, List<int[]> pizzaSlices)
             throws IOException {
