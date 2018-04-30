@@ -39,8 +39,9 @@ public class Jewellery {
         int val = jewellery[startInd - 1];
         maxValue += maxValue + val;
         sums = updateSums(sums, val);
-        int comb = calculateCombinations(sums, jewellery, maxValue,
-                0, startInd);
+        System.out.println();
+        int comb = calculateCombinations(sums, jewellery, maxValue, 
+                startInd, 0);
         System.out.println("At the moment combinations " + startInd 
                 + ": " + comb);
         System.out.println("start value: " + jewellery[startInd]);
@@ -48,8 +49,40 @@ public class Jewellery {
                 + Arrays.toString(sums.keySet().toArray()));
         System.out.println("At the moment vals: " 
                 + Arrays.toString(sums.values().toArray()));
-        return  comb + calculateCombinations(sums, jewellery, maxValue,
-                    startInd + 1);
+        //int multiplier = calculateMiltiplierForCombination(jewellery,
+                //startInd);
+        System.out.println("mult=" + multiplier);
+        return  comb + calculateCombinations(sums, jewellery,
+                maxValue, startInd + 1);
+    }
+
+    /** Calculate amount of possible combinations (look combination in math) */
+    private int calculateMiltiplierForCombination(int[] jewellery,
+            int startInd) {
+        int combStartInd = startInd;
+        while(combStartInd >= 0) {
+            if(jewellery[startInd] == jewellery[combStartInd]) combStartInd--;
+            else break;
+        }
+        combStartInd++;
+        int combEndInd = startInd;
+        while(combEndInd < jewellery.length) {
+            if(jewellery[startInd] == jewellery[combEndInd]) combEndInd++;
+            else break;
+        }
+        combEndInd--;
+        int n = combEndInd - combStartInd + 1;
+        int k = startInd - combStartInd + 1;
+        System.out.println("multiplier n, k " + n + ", " + k);
+        return fact(n) / (fact(k) * fact(n - k));
+    }
+
+    private int fact(int n) {
+        int f = 1;
+        for(int i = 1; i <= n; i++) {
+            f *= i;
+        }
+        return f;
     }
 
     /**
@@ -64,16 +97,20 @@ public class Jewellery {
     private Map<Integer, Integer> updateSums(Map<Integer, Integer> sums,
             int jewellery) {
         Map<Integer, Integer> newSums = new HashMap<>(sums);
+        //feed newSum with (oldVal+jewellery)
         for(Map.Entry<Integer, Integer> entry: sums.entrySet()) {
             int sum = entry.getKey();
             sum += jewellery;
             Integer amount = sums.get(sum);
-            newSums.put(sum, amount == null ? 1 : amount + 1);
+            newSums.put(sum, entry.getValue() 
+                    + (amount == null ?  0 : amount));
         }
+        //add to newSum values which can't be represented as (oldVal+jewellery)
         for(Map.Entry<Integer, Integer> entry: sums.entrySet()) {
             Integer amount = newSums.get(entry.getKey());
             if(amount == null) newSums.put(entry.getKey(), entry.getValue());
         }
+        //add jewellery itself
         if(newSums.get(jewellery) == null) newSums.put(jewellery, 1);
         else newSums.put(jewellery, newSums.get(jewellery) + 1);
         return newSums;
@@ -85,19 +122,20 @@ public class Jewellery {
      * index we must use in our combination.
      */
     private int calculateCombinations(Map<Integer, Integer> sums,
-            int[] jewellery, int maxValue, int currentSum, int currentInd) {
-        currentSum += currentSum + jewellery[currentInd];
-        if(currentSum > maxValue) return 0;
+            int[] jewellery, int maxValue, int currentInd, int currentSum) {
+        currentSum += jewellery[currentInd];
+        if(currentSum > maxValue) return 0; //first of right > sum in the left
         Integer amount = sums.get(currentSum);
         if(amount == null) amount = 0;
+        else {System.out.println("ind=" + currentInd + ",currentSum=" + currentSum);}
         for(int i = currentInd + 1; i < jewellery.length; i++)
-            amount += calculateCombinations(sums, jewellery, maxValue,
-                    currentSum, i);
+            amount += calculateCombinations(sums, jewellery, maxValue, 
+                    i, currentSum);
         return amount;
     }
 
     public static void main(String[] args) {
-        int[] jewellery = new int[] {1,2,5,3,4};
+        int[] jewellery = new int[] {1,1,1};
         System.out.println("Possible outcomes: "  + new Jewellery()
                 .calculatePossibleOutcomes(jewellery));
     }
