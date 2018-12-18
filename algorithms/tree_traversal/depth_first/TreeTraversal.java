@@ -1,9 +1,17 @@
-public class PreOrder {
-    public void print(Node h) {
+public class TreeTraversal {
+    public void print(Node h, Order order) {
         if(h == null) return;
-        System.out.print(" " + h.getVal());
-        print(h.getLeft());
-        print(h.getRight());
+        if(order == Order.PRE_ORDER) {
+            System.out.print(" " + h.getVal());
+        }
+        print(h.getLeft(), order);
+        if(order == Order.IN_ORDER) {
+            System.out.print(" " + h.getVal());
+        }
+        print(h.getRight(), order);
+        if(order == Order.POST_ORDER) {
+            System.out.print(" " + h.getVal());
+        }
     }
 
     public static void main(String[] args) {
@@ -20,7 +28,15 @@ public class PreOrder {
         Node ch23 = new Node(14);
         ch2.setRight(ch23);
         ch23.setLeft(new Node(13));
-        new PreOrder().print(h);
+        System.out.println("Pre-order traversal:");
+        new TreeTraversal().print(h, Order.PRE_ORDER);
+        System.out.println();
+        System.out.println("In-order traversal:");
+        new TreeTraversal().print(h, Order.IN_ORDER);
+        System.out.println();
+        System.out.println("Post-order traversal:");
+        new TreeTraversal().print(h, Order.POST_ORDER);
+        System.out.println();
     }        
     
     public static class Node {
@@ -51,5 +67,9 @@ public class PreOrder {
         public Node getRight() {
             return right;
         }
+    }
+
+    private static enum Order {
+        PRE_ORDER, IN_ORDER, POST_ORDER;
     }
 }
