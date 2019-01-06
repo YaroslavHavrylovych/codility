@@ -1,24 +1,24 @@
-# Coding Exercises
+# Exercises
 
-It's a playground of coding exercises, or just existing algorithms 
-implementation (e.g. sorting). Solutions can be on
-any language I want to try now. Each folder would have README file
-with task description, or not if the folder is self describing 
-(e.g. shell sort).
+This repo stores solutions of an any kind of
+puzzles (e.g. ZigZag route)
+or known problems (e.g. travelling salesman problem),
+or standard algorithms (e.g. Dijkstra algorithm).
 
-Solutions can be pretty old (thus not optimal) and one day, maybe, I would
-review them, but not today.
+Each folder has a README file with the task description and
+notes inside.
 
 ## Attention
 
-As solutions are custom some tasks are prohibited to use. Each task has
-description which points to the place where I have seen it (origin).
-Please check the origin to verify the possibility of usage for the task.
+Some tasks are prohibited to use by their license.
+In this tasks I did a brief description
+and gave a link to the original task. Please check the origin
+if you want to use this task anywhere.
 
 ## Environment
 
 * Debian sid linux distro
-* Java/javac - openJDK 1.8
+* Java/javac - openJDK 11
 * ghci (haskell runtime) - ghci version 8.0.2
 * Kotlin/kotlinc - Kotlin version 1.1.51
 
