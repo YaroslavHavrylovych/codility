@@ -1,61 +1,20 @@
-# Data Structures and Algorithms (DSA) 
+# Codility
 
-[![Build Status](https://travis-ci.org/YaroslavHavrylovych/dsa.svg?branch=development)](https://travis-ci.org/YaroslavHavrylovych/dsa)
+[![Build Status](https://travis-ci.org/YaroslavHavrylovych/codility.svg?branch=development)](https://travis-ci.org/YaroslavHavrylovych/codility)
 
 *Read in [Українська](README-UK.md)*
 
-This repo holds an overview and implementation of the most popular algorithms and data structures.
+This repo holds solved coder problems which I did out of curiosity, at the process
+of interview preparation, or even during the interview.
 Each algorithm has at least Java implementation and additionally can have
 Haskell or Kotlin.
 
-The file you reading can give you only the overview, for more details about a particular
-data structure or algorithms - please visit the corresponding sub-directory.
-
-The repo is not at its final stage, and a lot is still not done. If you want to check
-the progress, please visit the [trello](https://trello.com/b/TWRrtolV/dsa) board.
-
-## Data Structures
-
-[Data structure](https://en.wikipedia.org/wiki/Data_structure) -
- is a collection of data values, the relationships among them, and the functions or operations that can be applied to the data.
-
-To understand this section, you have to know what is an 
-[array](https://en.wikipedia.org/wiki/Array) and
-[abstract data type](https://en.wikipedia.org/wiki/Abstract_data_type).
-
-* List
-* Set
-* Associative array (Dictionary, Map)
-* Heap
-* Tree
-   * Binary Tree
-   * AVL Tree
-   * Red-Black Tree
-   * B-tree
-   * Weigh-balanced Tree
-* Trie
-* Graph
-
-## Algorithms
-
-[Algorithm](https://en.wikipedia.org/wiki/Algorithm) -
-is a description of a sequence of steps/actions one must perform to solve a particular problem.
-
 Exists a vast amount of methods to group algorithms. My way is based on
 [InterviewBit](https://www.interviewbit.com/courses/programming/)
-and [hackerrank](https://www.hackerrank.com/dashboard):
+and [Hackerrank](https://www.hackerrank.com/dashboard)
 
-* **[Sort](algorithms/sort/)**
-  * [Bubble Sort](algorithms/sort/comparison/bubble/)
-  * [Cocktail Shaker Sort](algorithms/sort/comparison/cocktail_shaker/)
-  * Insertion Sort
-  * Selection Sort
-  * Comb Sort
-  * Quick Sort
-  * Merge Sort
-  * Heap Sort
-  * Count Sort
-  * Radix Sort (Bucket, Digital)
+Some tasks have additional README which shows alternative solving methodologies,
+interesting things about the task or applied usage of it.
 
 ## Preparing for an interview?
 
