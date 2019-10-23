@@ -1,6 +1,6 @@
-import java.util.Arrays;
-
-/*
+/**
+ * Give a N*N square matrix, return an array of its anti-diagonals.
+ * <br />
  * https://www.interviewbit.com/problems/anti-diagonals/
  */
 public class Solution {
@@ -17,16 +17,5 @@ public class Solution {
             }
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        Solution sl = new Solution();
-        int[][] A = new int[3][];
-        A[0] = new int[]{1, 2, 3};
-        A[1] = new int[]{4, 5, 6};
-        A[2] = new int[]{7, 8, 9};
-        int[][] res = sl.diagonal(A);
-        for (int i = 0; i < res.length; i++)
-            System.out.println(Arrays.toString(res[i]));
     }
 }

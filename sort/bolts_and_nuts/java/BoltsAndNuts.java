@@ -98,6 +98,10 @@ class Bolt implements Comparable<Nut> {
         this.size = size;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     @Override
     public int hashCode() {
         return size.hashCode();
@@ -127,6 +131,10 @@ class Nut implements Comparable<Bolt> {
 
     Nut(int size) {
         this.size = size;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override

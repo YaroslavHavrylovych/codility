@@ -12,6 +12,12 @@ public class Test {
             new Nut(36), new Nut(34), new Nut(32), new Nut(37),
             new Nut(47), new Nut(42), new Nut(44), new Nut(46)};
         Map<Bolt, Nut> result = new BoltsAndNuts().sort(bolts, nuts);
-        System.out.println("Sorted bolts and nuts by size: " + result);
+        for(Bolt key: result.keySet()) {
+            if(result.get(key).getSize() != key.getSize()) {
+                System.out.println("Wrong bolt/nut pair, FAILED");
+                return;
+            }
+        }
+        System.out.println("Bolts and Nuts: SUCCESS");
     }
 }
