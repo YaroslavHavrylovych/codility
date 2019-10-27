@@ -13,13 +13,13 @@ KEY=$1
 if [[ ! $KEY ]]; then
     KEY="java"
 else
-    KEY="*$KEY*"
+    KEY="$KEY"
     echo "The file template: $KEY"
 fi
 
 mkdir -p out/java
 cd out/java
-find ../../ -type d -iname "${KEY}" | grep "java" \
+find ../../ -type d -iname "java" | grep "${KEY}" \
     | while read FILES_PATH; do
 
     #avoiding out dir
