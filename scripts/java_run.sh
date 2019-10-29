@@ -19,7 +19,7 @@ fi
 
 mkdir -p out/java
 cd out/java
-find ../../ -type d -iname "java" | grep "${KEY}" \
+find ../../ -type d -iname "java" | grep -i "${KEY}" \
     | while read FILES_PATH; do
 
     #avoiding out dir
