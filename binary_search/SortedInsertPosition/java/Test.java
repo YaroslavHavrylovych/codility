@@ -10,7 +10,7 @@ public class Test {
         a.add(6);
         System.out.println("Sorted insert position: " +
                 (sl.searchInsert(a, 5) == 2 
-                 && sl.searchInsert(a, 2) == 0
+                 && sl.searchInsert(a, 2) == 1
                  && sl.searchInsert(a, 7) == 4
                  && sl.searchInsert(a, 0) == 0 
                  ? "SUCCESS" : "FAILED"));
