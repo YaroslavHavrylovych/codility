@@ -18,7 +18,7 @@ fi
 
 mkdir -p out/kotlin
 cd out/kotlin
-find  ../../ -type d -iname "${KEY}" | grep "kotlin" \
+find  ../../ -type d -iname "kotlin" | grep "${KEY}" \
     | while read FILES_PATH; do
 
     #avoiding out dir

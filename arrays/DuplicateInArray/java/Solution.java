@@ -1,7 +1,10 @@
-import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
+ * Given a read only array of n + 1 integers between 1 and n, 
+ * find one number that repeats in linear time using less 
+ * than O(n) space and traversing the stream sequentially O(1) times.
+ * <br/>
  * https://www.interviewbit.com/problems/find-duplicate-in-array/
  */
 public class Solution {
@@ -12,17 +15,6 @@ public class Solution {
             tmp[v] = 1;
         }
         return -1;
-    }
-
-    public static void main(String[] args) {
-        Solution sl = new Solution();
-        ArrayList<Integer> lst = new ArrayList<>();
-        lst.add(3);
-        lst.add(4);
-        lst.add(1);
-        lst.add(4);
-        lst.add(1);
-        System.out.println(sl.repeatedNumber(lst));
     }
 }
 
