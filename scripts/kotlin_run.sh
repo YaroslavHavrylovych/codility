@@ -8,12 +8,12 @@ fi
 ./clean.sh
 cd ..
 
-key=$1
-if [[ ! $key ]]; then
-    key="kotlin"
+KEY=$1
+if [[ ! $KEY ]]; then
+    KEY="kotlin"
 else
-    key="*$key*"
-echo "The file template: $key"
+    KEY="$KEY"
+echo "The file template: $KEY"
 fi
 
 mkdir -p out/kotlin
