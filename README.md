@@ -1,6 +1,7 @@
 # Codility
 
 [![Build Status](https://travis-ci.org/YaroslavHavrylovych/codility.svg?branch=development)](https://travis-ci.org/YaroslavHavrylovych/codility)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 *Read in [Українська](README-UK.md)*
 
