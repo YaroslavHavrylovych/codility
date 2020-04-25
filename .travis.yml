@@ -10,7 +10,8 @@ matrix:
           dist: xenial
           jdk: openjdk11
           before_install:
-              - sudo snap install --classic kotlin
+              - curl -s https://get.sdkman.io | bash
+              - sdk install kotlin
           script:
               - bash scripts/kotlin_run.sh
 
