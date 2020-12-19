@@ -31,7 +31,7 @@ fun main() {
     var a = true
     a = a && smallestRepunitDivByK(1) == 1
     a = a && smallestRepunitDivByK(3) == 3
-    a = a && mallestRepunitDivByK(7) == 6
-    a = a && mallestRepunitDivByK(12371) == 1012 
+    a = a && smallestRepunitDivByK(7) == 6
+    a = a && smallestRepunitDivByK(12371) == 1012 
     println(if(a) "SUCCESS" else "FAIL")
 } 
