@@ -9,88 +9,77 @@ import java.util.stream.Collectors;
  * https://www.interviewbit.com/problems/city-tour/
  */
 public class Solution {
-    private int modulo = 1_000_000_007;
+    private long modulo = 1_000_000_007L;
 
     public int solve(int A, ArrayList<Integer> B) {
-        int prevCity = 1;
-        Set<Interval> intervals = new HashSet<>();
-        List<Integer> sortedCities = B.stream().distinct().sorted().collect(Collectors.toList());
-        for (int city : sortedCities) {
-            Interval interval;
-            if (prevCity == 1 && sortedCities.get(0) != 1) {
-                interval = new Interval(city - prevCity, 1);
-            } else {
-                interval = new Interval(city - prevCity - 1, doubleLinkedListComb(city - prevCity - 1));
+        int[] ln = new int[B.size() + 1];
+        long[] cb = new long[B.size() + 1];
+        fill(A, B, ln, cb);
+        for (int i = ln.length - 1; i > 0; i--) {
+            if (ln[i - 1] == 0) {
+                ln[i - 1] = ln[i];
+                cb[i - 1] = cb[i];
+                continue;
             }
-            prevCity = city;
-            if (interval.length < 1) continue;
-            intervals.add(interval);
+            if (ln[i] == 0) continue;
+            long nc = newComb(ln[i], ln[i - 1]);
+            ln[i - 1] = ln[i] + ln[i - 1];
+            nc = (((nc * cb[i]) % modulo) * cb[i - 1]) % modulo;
+            cb[i - 1] = nc;
         }
-        if (prevCity != A && sortedCities.get(sortedCities.size() - 1) != A) {
-            intervals.add(new Interval(A - prevCity, 1));
-        }
-        while (intervals.size() > 1) {
-            Iterator<Interval> it = intervals.iterator();
-            Interval i1 = it.next();
-            Interval i2 = it.next();
-            intervals.add(merge(i1, i2));
-            intervals.remove(i1);
-            intervals.remove(i2);
-        }
-        return intervals.isEmpty() ? 0 : (int) intervals.iterator().next().comb;
+        return (int) cb[0];
     }
 
-    private Interval merge(Interval i1, Interval i2) {
-        int longest = Math.max(i1.length, i2.length);
-        int shortest = Math.min(i1.length, i2.length);
-        long res = i1.comb * i2.comb % modulo;
-        for (int i = longest + 1; i <= longest + shortest; i++) {
-            res = res * i % modulo;
+    private void fill(int A, ArrayList<Integer> B, int[] ln, long[] cb) {
+        B.sort(Integer::compareTo);
+        ln[0] = B.get(0) - 1;
+        cb[0] = ln[0] == 0 ? 0 : 1;
+        for (int i = 1; i < B.size(); i++) {
+            ln[i] = B.get(i) - B.get(i - 1) - 1;
+            cb[i] = ln[i] == 0 ? 0 : pow(ln[i]);
         }
-        int a = 1;
-        for (int i = 2; i <= shortest; i++) {
-            a = a * i % modulo;
-        }
-        res = res * modExp(fact(shortest), modulo - 2) % modulo;
-        return new Interval(longest + shortest, res);
+        ln[B.size()] = A - B.get(B.size() - 1);
+        cb[B.size()] = ln[B.size()] == 0 ? 0 : 1;
     }
 
-    long fact(int val) {
+    private long pow(int len) {
         long res = 1;
-        for (int i = 1; i <= val; i++) res = res * i % modulo;
+        for (int i = len - 1; i > 0; i--) {
+            res = (res << 1) % modulo;
+        }
         return res;
     }
 
-    private long modExp(long val, long exp) {
+    private long newComb(int ln1, int ln2) {
+        int total = ln1 + ln2;
+        int ln = Math.max(ln1, ln2) + 1;
+        long res = 1L;
+        //res = total!/ln!
+        while (ln <= total) {
+            res = res * ln % modulo;
+            ln += 1;
+        }
+        //res / shortest!
+        res = res * modMult(fact(Math.min(ln1, ln2)), modulo - 2) % modulo;
+        return res;
+    }
+
+    private long modMult(long f, long pw) {
+        long m = f;
+        long e = pw;
         long res = 1;
-        long v = val;
-        long e = exp;
         while (e > 0) {
-            if ((e & 1) == 1) {
-                res = (res * v) % modulo;
-            }
-            v = v * v % modulo;
+            if ((e & 1) == 1) res = (res * m) % modulo;
+            m = (m * m) % modulo;
             e >>= 1;
         }
         return res;
     }
 
-    private int doubleLinkedListComb(int size) {
-        int res = 1;
-        for (int i = 1; i < size; i++) {
-            res = res * 2 % modulo;
-        }
+    private long fact(long n) {
+        long res = 1;
+        for (int i = 2; i <= n; i++) res = res * i % modulo;
         return res;
-    }
-
-    private class Interval {
-        int length;
-        long comb;
-
-        Interval(int length, long comb) {
-            this.length = length;
-            this.comb = comb;
-        }
     }
 
     public static void main(String[] args) {
